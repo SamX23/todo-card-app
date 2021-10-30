@@ -12,5 +12,7 @@
     "mongoose": "^6.0.12",
     "nodemon": "^2.0.14"
   },
-  "start": "nodemon index.js"
+  "scripts": {
+    "start": "nodemon index.js"
+  }
 }
