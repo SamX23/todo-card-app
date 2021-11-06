@@ -1,31 +1,31 @@
-import express, { application } from "express";
+import express from "express";
 import mongoose from "mongoose";
+import bodyParser from "body-parser";
 import cors from "cors";
-
+import dotenv from "dotenv";
 import postRoutes from "./routes/posts.js";
+
+dotenv.config();
 
 const server = express();
 
 server.use("/posts", postRoutes);
 
-server.use(express.json({ limit: "30mb", extended: true }));
-server.use(express.urlencoded({ limit: "30mb", extended: true }));
-server.use(cors);
+server.use(bodyParser.json({ limit: "30mb", extended: true }));
+server.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
+server.use(cors());
 
-// MONGODB ATLAS
-const CONNECTION_URL = "";
-const PORT = process.env.PORT || 3000;
+const CONNECTION_URL = process.env.MONGOOSE;
+const PORT = process.env.PORT || 3001;
 
-// mongoose
-//   .connect(CONNECTION_URL, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//   })
-//   .then(() =>
-//     server.listen(PORT, () => console.log("SERVER RUNNING ON : ", PORT))
-//   )
-//   .catch((err) => console.log(err));
-
-// mongoose.set("useFindAndModify", false);
-
-server.listen(PORT, () => console.log("SERVER RUNNING ON : ", PORT));
+mongoose
+  .connect(CONNECTION_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() =>
+    server.listen(PORT, () =>
+      console.log(`SERVER RUNNING ON : http://localhost:${PORT}`)
+    )
+  )
+  .catch((err) => console.log(err.message));
