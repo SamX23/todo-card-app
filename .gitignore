@@ -28,3 +28,4 @@ Client/yarn.lock
 Server/yarn.lock
 
 .prettierrc.json
+Server/.env
