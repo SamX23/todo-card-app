@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createPost } from "../../actions/posts";
-import FileBase from "react-file-base64";
-import { TextField, Button, Typography, Paper } from "@material-ui/core";
+import FileBase64 from "react-file-base64";
+import { TextField, Button, Typography, Paper } from "@mui/material/";
 import useStyles from "./styles";
 
 const Form = () => {
@@ -35,55 +35,69 @@ const Form = () => {
       >
         <Typography variant="h6">Creating a memory</Typography>
         <TextField
+          id="creator-field"
           name="creator"
           variant="outlined"
           label="Creator"
           fullWidth
+          required
           value={postData.creator}
           onChange={(e) =>
             setPostData({ ...postData, creator: e.target.value })
           }
         />
         <TextField
+          id="title-field"
+          name="title"
+          variant="outlined"
+          label="Title"
+          fullWidth
+          required
+          value={postData.title}
+          onChange={(e) => setPostData({ ...postData, title: e.target.value })}
+        />
+        <TextField
+          id="message-field"
           name="message"
           variant="outlined"
           label="Message"
           fullWidth
+          required
           value={postData.message}
           onChange={(e) =>
             setPostData({ ...postData, message: e.target.value })
           }
         />
         <TextField
+          id="tags-field"
           name="tags"
           variant="outlined"
           label="Tags"
           fullWidth
+          required
           value={postData.tags}
           onChange={(e) => setPostData({ ...postData, tags: e.target.value })}
         />
-        <TextField
-          name="selected-file"
-          variant="outlined"
-          label="Selected File"
-          fullWidth
-          value={postData.selectedFile}
-          onChange={(e) =>
-            setPostData({ ...postData, selectedFile: e.target.value })
-          }
-        />
-        <div className={classes.fileInput}>
-          <FileBase
+
+        <Paper
+          sx={{
+            width: "97%",
+            margin: "10px 0",
+          }}
+        >
+          <FileBase64
             type="file"
             multiple={false}
-            onDone={(base64) =>
+            onDone={({ base64 }) =>
               setPostData({ ...postData, selectedFile: base64 })
             }
           />
-        </div>
+        </Paper>
 
         <Button
-          className={classes.buttonSubmit}
+          sx={{
+            marginBottom: 1,
+          }}
           variant="contained"
           color="primary"
           size="large"
@@ -94,7 +108,7 @@ const Form = () => {
         </Button>
 
         <Button
-          variant="contained"
+          variant="outlined"
           color="secondary"
           size="small"
           onClick={clear}
